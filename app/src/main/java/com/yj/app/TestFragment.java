@@ -72,7 +72,7 @@ public class TestFragment extends BaseFragment implements OnClickListener {
                 Rigger.getRigger(this).startFragmentForResult(this, ResultFragment.newInstance(), 1000);
                 break;
             case R.id.fs_showFragment:
-                // TODO: 2021/10/20 中的返回按钮不行，why？ 
+                // TODO: 2021/10/20 中的返回按钮不行，why？
                 Rigger.getRigger(this).startFragment(ShowFragment.newInstance());
                 break;
             case R.id.fs_replaceFragment:

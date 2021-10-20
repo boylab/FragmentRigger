@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
@@ -73,4 +74,7 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
+    public boolean onRiggerBackPressed(){
+        return false;
+    }
 }

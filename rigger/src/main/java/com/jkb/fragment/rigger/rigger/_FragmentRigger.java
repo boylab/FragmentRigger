@@ -1,10 +1,5 @@
 package com.jkb.fragment.rigger.rigger;
 
-import static com.jkb.fragment.rigger.utils.RiggerConsts.METHOD_GET_FRAGMENT_TAG;
-import static com.jkb.fragment.rigger.utils.RiggerConsts.METHOD_GET_PUPPET_ANIMATIONS;
-import static com.jkb.fragment.rigger.utils.RiggerConsts.METHOD_ON_LAZYLOAD_VIEW_CREATED;
-import static com.jkb.fragment.rigger.utils.RiggerConsts.METHOD_ON_RIGGER_BACKPRESSED;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -88,12 +83,12 @@ final class _FragmentRigger extends _Rigger {
     @SuppressWarnings("All")
     private void invokeCustomFragmentTag(Class<? extends Fragment> clazz) {
         try {
-            Method method = clazz.getMethod(METHOD_GET_FRAGMENT_TAG);
+            Method method = clazz.getMethod(RiggerConsts.METHOD_GET_FRAGMENT_TAG);
             Object value = method.invoke(mFragment);
             if (value != null) {
                 if (!(value instanceof String)) {
                     throwException(
-                            new UnSupportException("Method " + METHOD_GET_FRAGMENT_TAG + " return value must be String"));
+                            new UnSupportException("Method " + RiggerConsts.METHOD_GET_FRAGMENT_TAG + " return value must be String"));
                 }
                 mFragmentTag = (String) value;
             }
@@ -122,22 +117,22 @@ final class _FragmentRigger extends _Rigger {
             mPopExitAnim = animator.popExit();
         }
         try {
-            Method method = clazz.getMethod(METHOD_GET_PUPPET_ANIMATIONS);
+            Method method = clazz.getMethod(RiggerConsts.METHOD_GET_PUPPET_ANIMATIONS);
             Object values = method.invoke(mFragment);
             if (values == null) {
                 throwException(
-                        new UnSupportException("Method " + METHOD_GET_PUPPET_ANIMATIONS + " return value can't be null"));
+                        new UnSupportException("Method " + RiggerConsts.METHOD_GET_PUPPET_ANIMATIONS + " return value can't be null"));
             }
             if (!(values instanceof int[])) {
                 throwException(
                         new UnSupportException(
-                                "Method " + METHOD_GET_PUPPET_ANIMATIONS + " return value's type must be int[]"));
+                                "Method " + RiggerConsts.METHOD_GET_PUPPET_ANIMATIONS + " return value's type must be int[]"));
             }
             int[] animators = (int[]) values;
             if (animators == null || animators.length != 4) {
                 throwException(
                         new UnSupportException(
-                                "Method " + METHOD_GET_PUPPET_ANIMATIONS + " return value's length must be 4"));
+                                "Method " + RiggerConsts.METHOD_GET_PUPPET_ANIMATIONS + " return value's length must be 4"));
             }
             mEnterAnim = animators[0];
             mExitAnim = animators[1];
@@ -273,7 +268,7 @@ final class _FragmentRigger extends _Rigger {
         Class<?> clazz = mFragment.getClass();
         Method onBackPressed = null;
         try {
-            onBackPressed = clazz.getMethod(METHOD_ON_RIGGER_BACKPRESSED);
+            onBackPressed = clazz.getMethod(RiggerConsts.METHOD_ON_RIGGER_BACKPRESSED);
             isInterrupt = (boolean) onBackPressed.invoke(mFragment);
         } catch (NoSuchMethodException e) {
             isInterrupt = false;
@@ -283,12 +278,12 @@ final class _FragmentRigger extends _Rigger {
             e.printStackTrace();
         }
         if (isInterrupt) {
-            Logger.d(mFragment, "onRiggerBackPressed() method is called");
+            Logger.d(mFragment, "onBackPressed() method is called");
             return;
         }
         // if this fragment is not contained into the stack ,then interrupt this method.
         if (!Rigger.getRigger(getPuppetHost()).getFragmentStack().contains(getFragmentTAG())) {
-            Logger.d(mFragment, "onRiggerBackPressed() method is called");
+            Logger.d(mFragment, "onBackPressed() method is called");
             Rigger.getRigger(getPuppetHost()).onBackPressed();
         } else {
             super.onBackPressed();
@@ -426,12 +421,12 @@ final class _FragmentRigger extends _Rigger {
         Method onLazyLoadViewCreated = null;
         try {
             onLazyLoadViewCreated = mFragment.getClass()
-                    .getMethod(METHOD_ON_LAZYLOAD_VIEW_CREATED, Bundle.class);
+                    .getMethod(RiggerConsts.METHOD_ON_LAZYLOAD_VIEW_CREATED, Bundle.class);
         } catch (NoSuchMethodException e) {
-            Logger.e(mFragment, "can not find method " + METHOD_ON_LAZYLOAD_VIEW_CREATED);
+            Logger.e(mFragment, "can not find method " + RiggerConsts.METHOD_ON_LAZYLOAD_VIEW_CREATED);
         }
         if (onLazyLoadViewCreated == null) {
-            throwException(new UnSupportException("can not find method " + METHOD_ON_LAZYLOAD_VIEW_CREATED));
+            throwException(new UnSupportException("can not find method " + RiggerConsts.METHOD_ON_LAZYLOAD_VIEW_CREATED));
         } else {
             try {
                 onLazyLoadViewCreated.invoke(mFragment, mSavedFragmentState);

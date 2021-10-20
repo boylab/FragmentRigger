@@ -1,10 +1,47 @@
-# FragmentRigger
+# FragmentRigger（in androidx）
 ![R](/images/rr.png)
 ![i](/images/i.png)
 ![g](/images/g.png)
 ![g](/images/g.png)
 ![e](/images/e.png)
 ![r](/images/r.png)
+
+# You must read it first
+```
+dependencies {
+    ...
+    classpath 'org.aspectj:aspectjtools:1.9.7'
+    classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.10'
+    // in the individual module build.gradle files
+    }
+```
+
+```
+Fragment must extend androidx.fragment.app.Fragment
+Activity must extend androidx.fragment.app.FragmentActivity
+```
+
+```
+public void onRiggerBackPressed(){}
+
+is change to...
+
+public void onBackPressed(){}
+```
+
+```
+坑一
+Activity must override onBackPressed()方法才有效
+@Override
+public void onBackPressed() {
+    super.onBackPressed();
+}
+```
+
+```
+坑二
+ShowFragment页面返回按钮异常，
+```
 
 :boom:A powerful library to manage Fragments.
 一个强大的Fragment管理框架。（[中文版入口](README-CN.md)）
