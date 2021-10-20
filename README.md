@@ -22,14 +22,6 @@ Activity must extend androidx.fragment.app.FragmentActivity
 ```
 
 ```
-public void onRiggerBackPressed(){}
-
-is change to...
-
-public void onBackPressed(){}
-```
-
-```
 坑一
 Activity must override onBackPressed()方法才有效
 @Override
